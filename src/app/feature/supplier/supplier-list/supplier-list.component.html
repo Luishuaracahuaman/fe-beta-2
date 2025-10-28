@@ -11,6 +11,13 @@
   <div class="table-header">
     <h2>Listado de Proveedores</h2>
     <div class="filters">
+      <!-- NUEVO: Filtro de estado reutilizable -->
+      <app-state-filter 
+        [currentFilter]="currentStateFilter"
+        (filterChange)="onStateFilterChange($event)"
+        class="state-filter-container">
+      </app-state-filter>
+
       <input 
         type="text" 
         [(ngModel)]="busquedaNombre" 
@@ -33,13 +40,15 @@
     </div>
   </div>
 
-  <div class="form-overlay" *ngIf="mostrarFormulario">
+  @if (mostrarFormulario) {
+  <div class="form-overlay">
     <app-supplier-form 
       [proveedor]="proveedorEditando"
       (guardar)="guardarProveedor($event)"
       (cancelar)="mostrarFormulario = false">
     </app-supplier-form>
   </div>
+  }
 
   <table class="supplier-table">
     <thead>
@@ -54,7 +63,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of proveedoresFiltrados">
+      @for (p of proveedoresFiltrados; track p.identifier) {
+      <tr>
         <td class="id-column">{{ p.identifier }}</td>
         <td class="name-column">{{ p.companyName | uppercase }}</td>
         <td class="ruc-column">{{ p.ruc }}</td>
@@ -69,14 +79,19 @@
           <button title="Editar" (click)="editarProveedor(p)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button *ngIf="p.state === 'A'" title="Desactivar" (click)="cambiarEstado(p.identifier, 'I')">
+          @if (p.state === 'A') {
+          <button title="Desactivar" (click)="cambiarEstado(p.identifier, 'I')">
             <mat-icon>toggle_off</mat-icon>
           </button>
-          <button *ngIf="p.state === 'I'" title="Activar" (click)="cambiarEstado(p.identifier, 'A')">
+          }
+          @if (p.state === 'I') {
+          <button title="Activar" (click)="cambiarEstado(p.identifier, 'A')">
             <mat-icon>toggle_on</mat-icon>
           </button>
+          }
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </section>

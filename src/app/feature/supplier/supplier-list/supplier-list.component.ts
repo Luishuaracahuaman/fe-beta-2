@@ -6,12 +6,20 @@ import { SupplierService } from '../../../core/services/supplier.service';
 import { SupplierFormComponent } from '../supplier-form/supplier-form.component';
 import { Supplier } from '../../../core/interfaces/supplier';
 import { StateTransformPipe } from '../../../core/pipes/state-transform.pipe';
+import { StateFilterComponent, StateFilter } from '../../../shared/components/state-filter/state-filter.component'; // ← AGREGAR
 
 @Component({
   selector: 'app-supplier-list',
   templateUrl: './supplier-list.component.html',
   styleUrls: ['./supplier-list.component.scss'],
-  imports: [CommonModule, FormsModule, MatIconModule, SupplierFormComponent, StateTransformPipe],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    MatIconModule, 
+    SupplierFormComponent, 
+    StateTransformPipe,
+    StateFilterComponent // ← AGREGAR
+  ],
   standalone: true
 })
 export class SupplierListComponent implements OnInit {
@@ -28,6 +36,32 @@ export class SupplierListComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarProveedores();
+  }
+
+  // NUEVO: Manejar cambio del filtro reutilizable
+  onStateFilterChange(filter: StateFilter): void {
+    switch(filter) {
+      case 'ALL': 
+        this.filtroEstado = 'T'; 
+        break;
+      case 'ACTIVE': 
+        this.filtroEstado = 'A'; 
+        break;
+      case 'INACTIVE': 
+        this.filtroEstado = 'I'; 
+        break;
+    }
+    this.filtrarProveedores();
+  }
+
+  // NUEVO: Propiedad computada para el filtro actual
+  get currentStateFilter(): StateFilter {
+    switch(this.filtroEstado) {
+      case 'T': return 'ALL';
+      case 'A': return 'ACTIVE';
+      case 'I': return 'INACTIVE';
+      default: return 'ALL';
+    }
   }
 
   cargarProveedores(): void {
