@@ -61,8 +61,8 @@ export class GarmentPageComponent implements OnInit {
   }
 
   onGuardar(nuevaPrenda: Garment) {
-    if (nuevaPrenda.id === 0) {
-      const { id, ...prendaSinId } = nuevaPrenda;
+    if (nuevaPrenda.identificador === 0) {  // ← CORREGIDO: id → identificador
+      const { identificador, ...prendaSinId } = nuevaPrenda;  // ← CORREGIDO: id → identificador
       this.garmentService.save(prendaSinId as Garment).subscribe({
         next: (prendaGuardada) => {
           this.prendas.push(prendaGuardada);
@@ -78,7 +78,7 @@ export class GarmentPageComponent implements OnInit {
       // Editar prenda
       this.garmentService.update(nuevaPrenda).subscribe({
         next: () => {
-          const index = this.prendas.findIndex(p => p.id === nuevaPrenda.id);
+          const index = this.prendas.findIndex(p => p.identificador === nuevaPrenda.identificador);  // ← CORREGIDO
           if (index !== -1) this.prendas[index] = nuevaPrenda;
           this.mostrarForm = false;
           Swal.fire('Éxito', 'Prenda actualizada correctamente', 'success');
@@ -92,9 +92,9 @@ export class GarmentPageComponent implements OnInit {
   }
 
   onEliminar(id: number) {
-    const prenda = this.prendas.find(p => p.id === id);
+    const prenda = this.prendas.find(p => p.identificador === id);  // ← CORREGIDO
     if (prenda) {
-      prenda.state = 'I';
+      prenda.estado = 'I';  // ← CORREGIDO: state → estado
       this.garmentService.delete(id).subscribe({
         next: () => {
           Swal.fire('Éxito', 'Prenda eliminada (inactivada)', 'success');
@@ -108,9 +108,9 @@ export class GarmentPageComponent implements OnInit {
   }
 
   onRestaurar(id: number) {
-    const prenda = this.prendas.find(p => p.id === id);
+    const prenda = this.prendas.find(p => p.identificador === id);  // ← CORREGIDO
     if (prenda) {
-      prenda.state = 'A';
+      prenda.estado = 'A';  // ← CORREGIDO: state → estado
       this.garmentService.restore(id).subscribe({
         next: () => {
           Swal.fire('Éxito', 'Prenda restaurada (activada)', 'success');
