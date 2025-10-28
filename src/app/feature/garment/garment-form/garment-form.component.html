@@ -1,0 +1,57 @@
+<section class="form-section">
+  <h2>{{ prenda ? 'Editar Prenda' : 'Nueva Prenda' }}</h2>
+  <form [formGroup]="garmentForm" (ngSubmit)="onSubmit()">
+    <!-- Nombre -->
+    <input 
+      type="text" 
+      placeholder="Nombre" 
+      formControlName="nombre" 
+      [class.invalid]="esInvalido('nombre')" />  <!-- ← CERRAR CORRECTAMENTE -->
+    <span *ngIf="esInvalido('nombre')">El nombre es requerido.</span>
+
+    <!-- Talla -->
+    <select formControlName="talla_prenda" [class.invalid]="esInvalido('talla_prenda')">
+      <option disabled class="seleccionarTalla" value="">Seleccione una talla</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="X">X</option>
+    </select>
+    <span *ngIf="esInvalido('talla_prenda')">La talla es requerida (S, M, L o X)</span>
+
+    <!-- Color -->
+    <input 
+      type="text" 
+      placeholder="Color" 
+      formControlName="color" 
+      [class.invalid]="esInvalido('color')" />  <!-- ← CERRAR CORRECTAMENTE -->
+    <span *ngIf="esInvalido('color')">El color es requerido (máx. 15 caracteres)</span>
+
+    <!-- Precio -->
+    <input 
+      type="number" 
+      placeholder="Precio sugerido" 
+      formControlName="precio_sugerido" 
+      [class.invalid]="esInvalido('precio_sugerido')" />  <!-- ← CERRAR CORRECTAMENTE -->
+    <span *ngIf="esInvalido('precio_sugerido')">El precio debe ser válido (mín. S/30)</span>
+
+    <!-- Stock -->
+    <input 
+      type="number" 
+      placeholder="Stock" 
+      formControlName="stock" 
+      [class.invalid]="esInvalido('stock')" />  <!-- ← CERRAR CORRECTAMENTE -->
+    <span *ngIf="esInvalido('stock')">El stock debe ser válido (mín. 1)</span>
+
+    <!-- Campos ocultos -->
+    <input type="hidden" formControlName="estado" />  <!-- ← CERRAR CORRECTAMENTE -->
+    <input type="hidden" formControlName="fecha_registro" />  <!-- ← CERRAR CORRECTAMENTE -->
+
+    <div class="form-buttons">
+      <button type="submit" class="save-btn" [disabled]="garmentForm.invalid">
+        {{ prenda ? 'Actualizar' : 'Guardar' }} Prenda
+      </button>
+      <button type="button" class="clear-btn" (click)="clearForm()">Limpiar</button>
+    </div>
+  </form>
+</section>

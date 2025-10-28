@@ -1,0 +1,248 @@
+@use "sass:color";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+$primary-color: rgba(248, 156, 162, 1);
+$secundary-color: rgba(237, 67, 54, 1);
+$tertiary-color: rgba(247, 247, 247, 1);
+$text-color: #333;
+$white: rgba(255, 255, 255, 0.8);
+$shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+* {
+  font-family: 'Poppins', sans-serif;
+
+  mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+.table-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  flex: 3;
+  max-height: 81.5vh;
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    h2 {
+      font-size: 18px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+      }
+
+      .filter-select {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #eee;
+        font-size: 15px;
+
+        &:hover {
+          background-color: #ddd;
+        }
+      }
+
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        &.btn-add {
+          background-color: $secundary-color;
+          color: white;
+
+          &:hover {
+            background-color: color.adjust($secundary-color, $lightness: -10%);
+          }
+        }
+
+        &.btn-report {
+          background-color: color.adjust($primary-color, $lightness: -2%);
+          color: $text-color;
+
+          &:hover {
+            background-color: color.adjust($primary-color, $lightness: -8%);
+          }
+        }
+
+        &.btn-reset {
+          padding: 8px 12px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          background-color: #eee;
+
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+
+  .garment-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background-color: $primary-color;
+      border-radius: 12px;
+    }
+
+    tbody {
+      max-height: 68.5vh;
+      overflow-y: auto;
+      
+      // Permite ocultar el scroll default y usar uno personalizado (al menos color y tamaño)
+      &::-webkit-scrollbar {
+        background-color: #eeeeee91;
+        border-radius: 4px;
+        width: 8px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: color.adjust($primary-color, $alpha: -0.6);
+        border-radius: 4px;
+
+        &:hover {
+          background-color: color.adjust($primary-color, $alpha: -0.3);
+        }
+      }
+    }
+
+    tr {
+      transition: background-color 0.2s ease;
+    }
+
+    tr:nth-child(even) {
+      background-color: #eeeeee91;
+    }
+
+    tr:hover {
+      background-color: rgba($primary-color, 0.2);
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      color: $text-color;
+      border-radius: 12px;
+      background-color: $primary-color;
+    }
+
+    // Tamaño por columnas
+    .id-column {
+      width: 4vh;
+    }
+
+    .name-column {
+      width: 37vh;
+    }
+
+    .size-column {
+      width: 8vh;
+    }
+
+    .color-column {
+      width: 27vh;
+    }
+
+    .price-column,
+    .stock-column,
+    .state-column {
+      width: 10vh;
+    }
+
+    .register-column {
+      width: 20vh;
+    }
+
+    .actions-column {
+      width: 15vh;
+    }
+
+    .estado {
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+
+      &.activo {
+        background-color: #d4f4dd;
+        color: #2e7d32;
+      }
+
+      &.inactivo {
+        background-color: #f8d7da;
+        color: #c62828;
+      }
+    }
+
+    .actions-column {
+      button {
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 0 5px;
+        transition: color 0.2s ease;
+
+        &:hover {
+          border-radius: 16px;
+          background-color: rgba($primary-color, 0.4);
+          transition: background-color 0.2s ease;
+        }
+      }
+    }
+  }
+}
+
+// Responsive para una pantalla de 720px de altura
+@media screen and (max-height: 720px) {
+  .table-section {
+
+    .garment-table {
+
+      tbody {
+        max-height: 56vh;
+      }
+
+      th,
+      td {
+        padding: 8px 10px;
+        font-size: 80%;
+      }
+    }
+  }
+}

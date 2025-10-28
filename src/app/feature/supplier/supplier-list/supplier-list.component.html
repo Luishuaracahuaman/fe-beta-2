@@ -1,0 +1,82 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Proveedores - Karina's Style</title>
+    
+    <!-- Metatags para redes sociales (Open Graph) -->
+    <meta property="og:description" content="Listado de proveedores para esta tienda de ropa a la moda, en nuestro distrito de San Vicente.">
+</head>
+
+<!-- supplier/supplier-list/supplier-list.component.html -->
+<section class="table-section">
+  <div class="table-header">
+    <h2>Listado de Proveedores</h2>
+    <div class="filters">
+      <input 
+        type="text" 
+        [(ngModel)]="busquedaNombre" 
+        placeholder="Buscar por nombre"
+        (input)="filtrarProveedores()"
+      />
+
+      <select 
+        [(ngModel)]="filtroEstado" 
+        class="filter-select"
+        (change)="filtrarProveedores()"
+      >
+        <option value="T">Todos</option>
+        <option value="A">Activos</option>
+        <option value="I">Inactivos</option>
+      </select>
+
+      <button (click)="nuevoProveedor()" class="btn-add">+ Nuevo Proveedor</button>
+      <button (click)="reiniciar()" class="btn-reset">Reiniciar</button>
+    </div>
+  </div>
+
+  <div class="form-overlay" *ngIf="mostrarFormulario">
+    <app-supplier-form 
+      [proveedor]="proveedorEditando"
+      (guardar)="guardarProveedor($event)"
+      (cancelar)="mostrarFormulario = false">
+    </app-supplier-form>
+  </div>
+
+  <table class="supplier-table">
+    <thead>
+      <tr>
+        <th class="id-column">ID</th>
+        <th class="name-column">Empresa</th>
+        <th class="ruc-column">RUC</th>
+        <th class="phone-column">Teléfono</th>
+        <th class="email-column">Email</th>
+        <th class="state-column">Estado</th>
+        <th class="actions-column">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of proveedoresFiltrados">
+        <td class="id-column">{{ p.identifier }}</td>
+        <td class="name-column">{{ p.companyName | uppercase }}</td>
+        <td class="ruc-column">{{ p.ruc }}</td>
+        <td class="phone-column">{{ p.phone }}</td>
+        <td class="email-column">{{ p.email | lowercase }}</td>
+        <td class="state-column">
+          <span class="estado" [ngClass]="p.state === 'A' ? 'activo' : 'inactivo'">
+            {{ p.state | stateTransform }}
+          </span>
+        </td>
+        <td class="actions-column">
+          <button title="Editar" (click)="editarProveedor(p)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button *ngIf="p.state === 'A'" title="Desactivar" (click)="cambiarEstado(p.identifier, 'I')">
+            <mat-icon>toggle_off</mat-icon>
+          </button>
+          <button *ngIf="p.state === 'I'" title="Activar" (click)="cambiarEstado(p.identifier, 'A')">
+            <mat-icon>toggle_on</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

@@ -1,0 +1,52 @@
+<div class="sidebar-container">
+    <!-- Encabezado fijo -->
+    <header class="main-header">
+        <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <h1 class="header-title">Panel de Administración</h1>
+
+    </header>
+
+<!-- Menú lateral fijo -->
+<aside class="sidebar">
+    <nav class="sidebar-nav">
+        <div class="logo-container">
+            <img src="logo_karinas.png" alt="Logo" class="logo" />
+        </div>
+        <ul>
+            <li>
+                <a routerLink="/home" routerLinkActive="active">
+                    <mat-icon>apps</mat-icon> Menú Principal
+                </a>
+            </li>
+            <li>
+                <!-- CAMBIA ESTA LÍNEA: garment-page → garments -->
+                <a routerLink="/garments" routerLinkActive="active">
+                    <mat-icon>checkroom</mat-icon> Prendas Tabla
+                </a>
+            </li>
+            <li>
+                <!-- CAMBIA ESTA LÍNEA: supplier-list → suppliers -->
+                <a routerLink="/suppliers" routerLinkActive="active">
+                     <mat-icon>inventory_2</mat-icon> Proveedores Tabla
+                </a>
+            </li>
+        </ul>
+
+        <div class="user-section">
+            <div class="user-info">
+                <p>Administrador</p>
+            </div>
+            <button class="logout-btn">Cerrar sesión</button>
+        </div>
+    </nav>
+</aside>
+
+    <!-- Contenido -->
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

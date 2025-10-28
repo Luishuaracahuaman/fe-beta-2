@@ -1,0 +1,66 @@
+<section class="form-section">
+  <h2>{{ proveedor ? 'Editar Proveedor' : 'Nuevo Proveedor' }}</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input 
+      type="text" 
+      placeholder="Nombre de Empresa" 
+      formControlName="companyName" 
+      [class.invalid]="esInvalido('companyName')" 
+    />
+    <span *ngIf="esInvalido('companyName')">
+      {{ form.get('companyName')?.errors?.['required'] ? 'Nombre requerido' : '' }}
+      {{ form.get('companyName')?.errors?.['minlength'] ? 'Mínimo 2 caracteres' : '' }}
+    </span>
+
+    <input 
+      type="text" 
+      placeholder="RUC (11 dígitos)" 
+      formControlName="ruc" 
+      [class.invalid]="esInvalido('ruc')" 
+    />
+    <span *ngIf="esInvalido('ruc')">
+      {{ form.get('ruc')?.errors?.['required'] ? 'RUC requerido' : '' }}
+      {{ form.get('ruc')?.errors?.['pattern'] ? '11 dígitos requeridos' : '' }}
+    </span>
+
+    <input 
+      type="text" 
+      placeholder="Teléfono (9xxxxxxxx)" 
+      formControlName="phone" 
+      [class.invalid]="esInvalido('phone')" 
+    />
+    <span *ngIf="esInvalido('phone')">
+      {{ form.get('phone')?.errors?.['required'] ? 'Teléfono requerido' : '' }}
+      {{ form.get('phone')?.errors?.['pattern'] ? 'Debe empezar con 9 y tener 9 dígitos' : '' }}
+    </span>
+
+    <input 
+      type="text" 
+      placeholder="Dirección" 
+      formControlName="address" 
+      [class.invalid]="esInvalido('address')" 
+    />
+    <span *ngIf="esInvalido('address')">
+      {{ form.get('address')?.errors?.['required'] ? 'Dirección requerida' : '' }}
+      {{ form.get('address')?.errors?.['minlength'] ? 'Mínimo 5 caracteres' : '' }}
+    </span>
+
+    <input 
+      type="email" 
+      placeholder="Email" 
+      formControlName="email" 
+      [class.invalid]="esInvalido('email')" 
+    />
+    <span *ngIf="esInvalido('email')">
+      {{ form.get('email')?.errors?.['required'] ? 'Email requerido' : '' }}
+      {{ form.get('email')?.errors?.['email'] ? 'Email inválido' : '' }}
+    </span>
+
+    <div class="form-buttons">
+      <button type="submit" class="save-btn" [disabled]="form.invalid">
+        {{ proveedor ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button type="button" class="clear-btn" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</section>

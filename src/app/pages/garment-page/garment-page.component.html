@@ -1,0 +1,27 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Prendas - Karina's Style</title>
+    
+    <!-- Metatags para redes sociales (Open Graph) -->
+    <meta property="og:description" content="Listado de prendas adquiridas para esta tienda de ropa a la moda, en nuestro distrito de San Vicente.">
+</head>
+
+<body>
+    <div class="admin-panel">
+
+        <div class="content">
+            <app-garment-list [prendas]="prendas" (editarPrenda)="onEditar($event)"
+                (eliminarPrenda)="onEliminar($event)" (restaurarPrenda)="onRestaurar($event)"
+                (agregarPrenda)="onAgregar()" (reiniciarLista)="onReiniciar()">
+            </app-garment-list>
+
+            <div *ngIf="mostrarForm" class="overlay" (click)="cerrarPorClickExterior($event)">
+                <div class="modal" (click)="$event.stopPropagation()">
+                    <app-garment-form [prenda]="prendaEditando" (guardar)="onGuardar($event)">
+                    </app-garment-form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>

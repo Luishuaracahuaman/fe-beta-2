@@ -1,0 +1,67 @@
+@use "sass:math";
+@use "sass:color";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+$primary-color: rgba(248, 156, 162, 1);
+$secundary-color: rgba(237, 67, 54, 1);
+$tertiary-color: rgba(247, 247, 247, 1);
+$text-color: #333;
+$white: #fff;
+$background-color: #8080803f;
+$shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  height: 90vh;
+  background-color: $background-color;
+  border-radius: 12px;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  border: 3px solid $secundary-color;
+  border-radius: 16px;
+  text-align: center;
+  background-color: $white;
+  color: $text-color;
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: $shadow;
+
+  mat-icon {
+    width: 100px;
+    height: 100px;
+    font-size: 100px;
+    margin-bottom: 10px;
+    color: $secundary-color;
+  }
+
+  &:hover {
+    border-width: 9px;
+    border-color: $secundary-color;
+    box-shadow: 0 0 15px $primary-color;
+  }
+}
+
+// Estilos para pantallas pequenas
+@media (max-height: 720px) {
+  .home-container {
+    gap: 20px;
+    height: 85vh;
+  }
+
+  .option-card {
+    width: 100%;
+    max-width: 200px;
+  }
+}
